@@ -1,1 +1,69 @@
-<app-example-page [example]="example"></app-example-page>
+<section class="skin-section custom-skin-sample">
+  <div class="section-heading">
+    <p class="eyebrow">Theme</p>
+    <h2>Styling</h2>
+    <p class="example-copy">Custom-skin route showing CSS variable styling.</p>
+    <a class="stackblitz-row-link" [href]="stackBlitzUrl" target="_blank" rel="noopener">Open this route in StackBlitz</a>
+  </div>
+
+  <div class="skin-buttons">
+    <button *ngFor="let skin of availableSkins" type="button" [class.active]="activeSkin === skin" (click)="switchSkin(skin)">{{ skinLabel(skin) }}</button>
+  </div>
+
+  <article class="example-row" [class.overflow-example-row]="false">
+    <div class="demo-cell">
+        <div class="dropdown-stack">
+          <angular-multiselect
+            [data]="templateItems"
+            [(ngModel)]="stylingSelected"
+            [settings]="stylingSettings"
+            (onSelect)="record('select', $event)"
+            (onDeSelect)="record('deselect', $event)"
+            (onSelectAll)="record('selectAll', $event)"
+            (onDeSelectAll)="record('deselectAll', $event)"
+          >
+            <c-badge>
+              <ng-template let-item="item">
+                <span class="swatch-chip"><span class="swatch" [style.background]="item.color"></span>{{ item.itemName }}</span>
+              </ng-template>
+            </c-badge>
+            <c-item>
+              <ng-template let-item="item">
+                <span class="option-row">
+                  <span class="swatch" [style.background]="item.color"></span>
+                  <span><strong>{{ item.itemName }}</strong><small>{{ item.detail }}</small></span>
+                </span>
+              </ng-template>
+            </c-item>
+          </angular-multiselect>
+          <p class="settings-preview">skin: {{ stylingSettings.skin }}</p>
+        </div>
+    </div>
+
+    <div class="code-cell">
+      <div class="code-grid">
+        <div class="code-card">
+          <strong>HTML</strong>
+          <pre>{{ htmlSnippet }}</pre>
+        </div>
+        <div class="code-card">
+          <strong>TS</strong>
+          <pre>{{ tsSnippet }}</pre>
+        </div>
+        <div class="code-card">
+          <strong>Data</strong>
+          <pre>{{ dataSnippet }}</pre>
+        </div>
+        <div class="code-card">
+          <strong>SCSS</strong>
+          <pre>{{ scssSnippet }}</pre>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="activity">
+  <h2>Event log</h2>
+  <p *ngFor="let event of events">{{ event }}</p>
+</section>
