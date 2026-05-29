@@ -19,3 +19,5 @@ export interface DropdownExample {
   skinSwitcher?: boolean;
   dropdowns: DropdownInstance[];
 }
+
+export const EXAMPLE_SKINS = ['classic', 'material', 'dark', 'custom', 'brand'];

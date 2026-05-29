@@ -51,7 +51,12 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "src/app/examples",
+                "output": "source/examples"
+              }
             ],
             "styles": [
               "node_modules/@stackline/angular-multiselect-dropdown/themes/default.theme.css",

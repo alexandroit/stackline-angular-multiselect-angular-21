@@ -8,15 +8,7 @@ import { createGroupByExample } from './group-by.data';
   styleUrls: ['./group-by.component.scss']
 })
 export class GroupByExampleComponent implements OnInit {
-  readonly stackBlitzUrl = 'https://stackblitz.com/github/alexandroit/stackline-angular-multiselect-angular-21?startScript=start&initialpath=%2Fgroup-by';
-  readonly availableSkins = ['classic', 'material', 'dark', 'custom', 'brand'];
-  readonly htmlSnippet = "<angular-multiselect\n  [data]=\"groupedCountries\"\n  [(ngModel)]=\"groupBySelected\"\n  [settings]=\"groupBySettings\"\n  (onSelect)=\"record('select', $event)\"\n  (onDeSelect)=\"record('deselect', $event)\"\n  (onSelectAll)=\"record('selectAll', $event)\"\n  (onDeSelectAll)=\"record('deselectAll', $event)\"\n></angular-multiselect>";
-  readonly tsSnippet = "example = createGroupByExample();\n\ngroupedCountries = this.example.dropdowns[0].data;\ngroupBySelected = this.example.dropdowns[0].model;\ngroupBySettings = this.example.dropdowns[0].settings;\n\nrecord(type: string, value: any) {\n  const label = value && value.itemName ? value.itemName : JSON.stringify(value);\n  this.events.unshift(type + ': ' + label);\n}";
-  readonly dataSnippet = "{\n  \"groupedCountries\": [\n    {\n      \"id\": 21,\n      \"itemName\": \"Brazil\",\n      \"region\": \"Americas\"\n    },\n    {\n      \"id\": 22,\n      \"itemName\": \"Canada\",\n      \"region\": \"Americas\"\n    },\n    {\n      \"id\": 23,\n      \"itemName\": \"Portugal\",\n      \"region\": \"Europe\"\n    },\n    {\n      \"id\": 24,\n      \"itemName\": \"Germany\",\n      \"region\": \"Europe\"\n    },\n    {\n      \"id\": 25,\n      \"itemName\": \"Mexico\",\n      \"region\": \"Americas\"\n    },\n    {\n      \"id\": 26,\n      \"itemName\": \"Colombia\",\n      \"region\": \"Americas\"\n    }\n  ],\n  \"groupBySelected\": [\n    {\n      \"id\": 21,\n      \"itemName\": \"Brazil\",\n      \"region\": \"Americas\"\n    }\n  ],\n  \"groupBySettings\": {\n    \"enableSearchFilter\": true,\n    \"groupBy\": \"region\",\n    \"selectGroup\": true,\n    \"maxHeight\": 220,\n    \"text\": \"Group by\",\n    \"skin\": \"classic\"\n  }\n}";
-  readonly scssSnippet = "@use '../../shared/example-layout';\n\n:host {\n  display: block;\n}";
-
   example = createGroupByExample();
-  activeSkin = 'classic';
   events = ['ready'];
   groupedCountries: any[] = [];
   groupBySelected: any[] = [];
@@ -24,20 +16,6 @@ export class GroupByExampleComponent implements OnInit {
 
   ngOnInit() {
     this.syncDropdownReferences();
-    this.activeSkin = this.example.dropdowns[0]?.settings?.skin || 'classic';
-  }
-
-  switchSkin(skin: string) {
-    this.activeSkin = skin;
-    this.example.dropdowns.forEach((dropdown) => {
-      dropdown.settings = { ...dropdown.settings, skin, text: 'Skin ' + this.skinLabel(skin) };
-    });
-    this.syncDropdownReferences();
-    this.record('skin', skin);
-  }
-
-  skinLabel(skin: string) {
-    return skin.charAt(0).toUpperCase() + skin.slice(1);
   }
 
   record(type: string, value: any) {

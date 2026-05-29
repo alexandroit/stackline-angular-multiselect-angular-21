@@ -1,0 +1,22 @@
+<div class="code-grid" *ngIf="!loading; else loadingSource">
+  <div class="code-card">
+    <strong>HTML</strong>
+    <pre>{{ source.html }}</pre>
+  </div>
+  <div class="code-card">
+    <strong>TS</strong>
+    <pre>{{ source.ts }}</pre>
+  </div>
+  <div class="code-card">
+    <strong>Data</strong>
+    <pre>{{ source.data }}</pre>
+  </div>
+  <div class="code-card">
+    <strong>SCSS</strong>
+    <pre>{{ source.scss }}</pre>
+  </div>
+</div>
+
+<ng-template #loadingSource>
+  <div class="source-loading">Loading source files...</div>
+</ng-template>
