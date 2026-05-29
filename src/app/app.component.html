@@ -1,0 +1,29 @@
+<main class="page shell-page">
+  <header class="topbar">
+    <p class="eyebrow">Angular 21.2.14 runtime</p>
+    <h1>&#64;stackline/angular-multiselect-dropdown 21.1.14</h1>
+  </header>
+
+  <section class="docs-main">
+    <router-outlet></router-outlet>
+  </section>
+
+  <footer class="example-footer" aria-label="Angular 21 example routes">
+    <div class="footer-heading">
+      <p class="eyebrow">Example routes</p>
+      <h2>Open a focused Angular 21 example</h2>
+    </div>
+
+    <nav class="footer-link-grid">
+      <a
+        *ngFor="let link of links"
+        [routerLink]="['/', link.slug]"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <span class="route-title">{{ link.title }}</span>
+        <span class="route-path">/{{ link.slug }}</span>
+      </a>
+    </nav>
+  </footer>
+</main>

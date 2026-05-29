@@ -1,0 +1,76 @@
+<section class="skin-section" [ngClass]="example.surfaceClass || ''">
+  <div class="section-heading">
+    <p class="eyebrow">{{ example.kicker }}</p>
+    <h2>{{ example.title }}</h2>
+    <p class="example-copy">{{ example.description }}</p>
+    <a class="stackblitz-row-link" [href]="stackBlitzUrl(example.slug)" target="_blank" rel="noopener">Open this route in StackBlitz</a>
+  </div>
+
+  <div class="skin-buttons" *ngIf="example.skinSwitcher">
+    <button *ngFor="let skin of availableSkins" type="button" [class.active]="activeSkin === skin" (click)="switchSkin(skin)">{{ skinLabel(skin) }}</button>
+  </div>
+
+  <article class="example-row" [class.overflow-example-row]="example.dialog">
+    <div class="demo-cell">
+      <ng-container *ngIf="example.dialog; else normalDropdowns">
+        <div class="overflow-dialog-frame">
+          <div class="demo-dialog-surface">
+            <div class="dialog-copy">
+              <strong>Simulated mat-mdc-dialog-surface</strong>
+              <span>overflow hidden, stacking context, and a dropdown near the lower edge.</span>
+            </div>
+            <ng-container *ngTemplateOutlet="dropdownTemplate; context: { dropdown: example.dropdowns[0] }"></ng-container>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #normalDropdowns>
+        <div class="dropdown-stack" *ngFor="let dropdown of example.dropdowns">
+          <ng-container *ngTemplateOutlet="dropdownTemplate; context: { dropdown: dropdown }"></ng-container>
+        </div>
+      </ng-template>
+
+      <ng-template #dropdownTemplate let-dropdown="dropdown">
+        <angular-multiselect *ngIf="!dropdown.template" [data]="dropdown.data" [(ngModel)]="dropdown.model" [settings]="dropdown.settings" (onSelect)="record('select', $event)" (onDeSelect)="record('deselect', $event)" (onSelectAll)="record('selectAll', $event)" (onDeSelectAll)="record('deselectAll', $event)"></angular-multiselect>
+        <angular-multiselect *ngIf="dropdown.template" [data]="dropdown.data" [(ngModel)]="dropdown.model" [settings]="dropdown.settings" (onSelect)="record('select', $event)" (onDeSelect)="record('deselect', $event)">
+          <c-badge>
+            <ng-template let-item="item">
+              <span class="swatch-chip"><span class="swatch" [style.background]="item.color"></span>{{ item.itemName }}</span>
+            </ng-template>
+          </c-badge>
+          <c-item>
+            <ng-template let-item="item">
+              <span class="option-row">
+                <span class="swatch" [style.background]="item.color"></span>
+                <span><strong>{{ item.itemName }}</strong><small>{{ item.detail }}</small></span>
+              </span>
+            </ng-template>
+          </c-item>
+        </angular-multiselect>
+        <p class="settings-preview">skin: {{ dropdown.settings.skin }}</p>
+      </ng-template>
+    </div>
+
+    <div class="code-cell">
+      <div class="code-grid">
+        <div class="code-card">
+          <strong>HTML</strong>
+          <pre>{{ htmlCode(example.dropdowns[0]) }}</pre>
+        </div>
+        <div class="code-card">
+          <strong>TS</strong>
+          <pre>{{ tsCode(example.dropdowns[0]) }}</pre>
+        </div>
+        <div class="code-card">
+          <strong>JSON</strong>
+          <pre>{{ jsonCode() }}</pre>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="activity">
+  <h2>Event log</h2>
+  <p *ngFor="let event of events">{{ event }}</p>
+</section>
