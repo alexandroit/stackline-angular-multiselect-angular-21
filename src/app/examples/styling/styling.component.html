@@ -10,7 +10,7 @@
     <button *ngFor="let skin of availableSkins" type="button" [class.active]="activeSkin === skin" (click)="switchSkin(skin)">{{ skinLabel(skin) }}</button>
   </div>
 
-  <article class="example-row" [class.overflow-example-row]="false">
+  <article class="example-row">
     <div class="demo-cell">
         <div class="dropdown-stack">
           <angular-multiselect
