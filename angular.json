@@ -51,15 +51,11 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "src/app/examples",
-                "output": "source/examples"
-              }
+              "src/assets"
             ],
             "styles": [
               "node_modules/@stackline/angular-multiselect-dropdown/themes/default.theme.css",
+              "node_modules/flag-icons/css/flag-icons.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -74,8 +70,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "20kb",
+                  "maximumError": "28kb"
                 }
               ],
               "fileReplacements": [

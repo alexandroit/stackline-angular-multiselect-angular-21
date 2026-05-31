@@ -3,7 +3,23 @@ export interface ExampleLink { slug: string; title: string; }
 export const EXAMPLE_LINKS: ExampleLink[] = [
   {
     "slug": "basic",
-    "title": "Basic multi"
+    "title": "Basic usage"
+  },
+  {
+    "slug": "keyboard-contract",
+    "title": "Keyboard contract"
+  },
+  {
+    "slug": "aria-state",
+    "title": "ARIA state"
+  },
+  {
+    "slug": "template-slots",
+    "title": "Template slots"
+  },
+  {
+    "slug": "headless-aria",
+    "title": "Headless + ARIA"
   },
   {
     "slug": "single-selection",

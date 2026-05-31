@@ -52,7 +52,7 @@ export class ExampleSourceComponent implements OnChanges {
 
   private loadFile(fileName: string) {
     return this.http
-      .get(`/source/examples/${this.slug}/${fileName}`, { responseType: 'text' })
+      .get(`source/examples/${this.slug}/${fileName}`, { responseType: 'text' })
       .pipe(catchError(() => of('')));
   }
 

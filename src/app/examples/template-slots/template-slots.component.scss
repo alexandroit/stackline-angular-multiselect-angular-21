@@ -1,0 +1,44 @@
+@use '../../shared/example-layout';
+
+.country-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.country-code {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 26px;
+  border-radius: 8px;
+  background: #e8eaf6;
+  color: #303f9f;
+  font-weight: 800;
+}
+
+.country-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.country-copy strong {
+  line-height: 1.2;
+}
+
+.country-copy small {
+  color: #667085;
+}
+
+.selected-mark {
+  color: #0f766e;
+  font-weight: 800;
+}
+
+.badge-template {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}

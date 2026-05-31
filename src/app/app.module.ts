@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { AngularMultiSelectModule } from '@stackline/angular-multiselect-dropdown';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule],
-  providers: [provideHttpClient()],
+  imports: [BrowserModule, FormsModule, AngularMultiSelectModule],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,29 +1,501 @@
-<main class="page shell-page">
+<main class="page">
   <header class="topbar">
-    <p class="eyebrow">Angular 21.2.14 runtime</p>
-    <h1>&#64;stackline/angular-multiselect-dropdown 21.1.14</h1>
+    <p class="eyebrow">Angular {{ angularRuntime }} runtime</p>
+    <h1>&#64;stackline/angular-multiselect-dropdown {{ packageVersion }}</h1>
   </header>
 
-  <section class="docs-main">
-    <router-outlet></router-outlet>
-  </section>
+  <nav class="live-menu" aria-label="Angular 21 live tests">
+    <button
+      type="button"
+      *ngFor="let route of routes"
+      [class.active]="currentPath === route.path"
+      (click)="setRoute(route.path)">
+      <strong>{{ route.title }}</strong>
+      <span>{{ route.description }}</span>
+    </button>
+  </nav>
 
-  <footer class="example-footer" aria-label="Angular 21 example routes">
-    <div class="footer-heading">
-      <p class="eyebrow">Example routes</p>
-      <h2>Open a focused Angular 21 example</h2>
+  <section
+    class="skin-section"
+    [class.material-section]="currentPath === 'material'"
+    [class.overlay-section]="currentPath === 'dialog-overlay'"
+    [class.skin-switcher-section]="currentPath === 'skin-switcher'"
+    [class.extra-section]="currentPath === 'extra'"
+    [class.feature-lab-section]="currentPath === 'coverage'"
+    [class.headless-route-section]="currentPath === 'headless-aria'">
+    <div class="section-heading">
+      <p class="eyebrow">{{ currentPath === 'coverage' ? 'Angular 21.2.0 validation' : 'Live route' }}</p>
+      <h2>{{ activeRoute.title }}</h2>
+      <p class="example-copy">{{ activeRoute.description }}</p>
+      <a class="stackblitz-link" [href]="stackBlitzUrl(currentPath)" target="_blank" rel="noopener">
+        Open this route in StackBlitz
+      </a>
     </div>
 
-    <nav class="footer-link-grid">
-      <a
-        *ngFor="let link of links"
-        [routerLink]="['/', link.slug]"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <span class="route-title">{{ link.title }}</span>
-        <span class="route-path">/{{ link.slug }}</span>
-      </a>
-    </nav>
-  </footer>
+    <ng-container [ngSwitch]="currentPath">
+      <ng-container *ngSwitchCase="'skin-switcher'">
+        <div class="skin-buttons" aria-label="Skin switcher">
+          <button
+            type="button"
+            *ngFor="let skin of skins"
+            [class.active]="skinSwitchSkin === skin"
+            (click)="setSkinSwitchSkin(skin)">
+            {{ labelForSkin(skin) }}
+          </button>
+        </div>
+
+        <article class="example-row custom-skin-sample">
+          <div class="demo-cell">
+            <h3>Updates only settings.skin</h3>
+            <ng-container
+              *ngTemplateOutlet="dropdownTemplate; context: { example: skinSwitchExample }">
+            </ng-container>
+            <p class="settings-preview">skin: {{ skinSwitchExample.settings.skin }}</p>
+          </div>
+
+          <div class="code-cell">
+            <ng-container
+              *ngTemplateOutlet="codeTemplate; context: { example: skinSwitchExample }">
+            </ng-container>
+          </div>
+        </article>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'coverage'">
+        <div class="feature-lab-grid">
+          <article class="feature-lab-card">
+            <h3>Keyboard behavior toggles</h3>
+            <div class="keyboard-contract">
+              <strong>Target</strong>
+              <div class="keyboard-targets">
+                <button type="button" [class.active]="keyboardTarget === 'trigger'" (click)="keyboardTarget = 'trigger'">
+                  Trigger
+                </button>
+                <button type="button" [class.active]="keyboardTarget === 'option'" (click)="keyboardTarget = 'option'">
+                  Option
+                </button>
+                <button type="button" [class.active]="keyboardTarget === 'search'" (click)="keyboardTarget = 'search'">
+                  Search
+                </button>
+                <button type="button" [class.active]="keyboardTarget === 'badge'" (click)="keyboardTarget = 'badge'">
+                  Badge
+                </button>
+              </div>
+
+              <strong>Enabled by default</strong>
+              <div class="keyboard-toggles">
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.spaceTriggerToggles"
+                  (click)="toggleKeyboardSetting('spaceTriggerToggles')">
+                  Space trigger
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.spaceOptionToggles"
+                  (click)="toggleKeyboardSetting('spaceOptionToggles')">
+                  Space option
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.tabMovesFocus"
+                  (click)="toggleKeyboardSetting('tabMovesFocus')">
+                  Tab
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.arrowsNavigateOptions"
+                  (click)="toggleKeyboardSetting('arrowsNavigateOptions')">
+                  Arrows
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.escapeCloses"
+                  (click)="toggleKeyboardSetting('escapeCloses')">
+                  Escape
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.backspaceRemovesFocusedBadge"
+                  (click)="toggleKeyboardSetting('backspaceRemovesFocusedBadge')">
+                  Badge delete
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.backspaceRemovesLastOnEmptySearch"
+                  (click)="toggleKeyboardSetting('backspaceRemovesLastOnEmptySearch')">
+                  Search backspace
+                </button>
+              </div>
+
+              <strong>Space on option</strong>
+              <div class="space-mode-toggles">
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.spaceOptionAction === 'toggle'"
+                  (click)="setSpaceOptionAction('toggle')">
+                  Toggle only
+                </button>
+                <button
+                  type="button"
+                  [class.active]="keyboardSettings.spaceOptionAction === 'toggle-and-next'"
+                  (click)="setSpaceOptionAction('toggle-and-next')">
+                  Toggle and next
+                </button>
+              </div>
+
+              <dl>
+                <div>
+                  <dt>Space</dt>
+                  <dd>Trigger opens or closes. Option toggles itself. Search types a space.</dd>
+                </div>
+                <div>
+                  <dt>Tab</dt>
+                  <dd>Moves focus. It never selects an option.</dd>
+                </div>
+                <div>
+                  <dt>Escape</dt>
+                  <dd>Closes the list without clearing selected values.</dd>
+                </div>
+                <div>
+                  <dt>Backspace</dt>
+                  <dd>Focused badge removes itself. Empty search removal is optional and disabled here.</dd>
+                </div>
+              </dl>
+
+              <p class="keyboard-settings-preview">{{ keyboardSettings | json }}</p>
+            </div>
+          </article>
+
+          <article class="feature-lab-card">
+            <h3>ARIA state audit</h3>
+            <div class="aria-audit-panel">
+              <dl>
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>combobox</dd>
+                </div>
+                <div>
+                  <dt>Option</dt>
+                  <dd>aria-selected</dd>
+                </div>
+                <div>
+                  <dt>Multiselect</dt>
+                  <dd>aria-checked</dd>
+                </div>
+              </dl>
+              <p>Each option exposes matching aria-selected and aria-checked values for multiselect announcements.</p>
+            </div>
+          </article>
+
+          <article class="feature-lab-card">
+            <h3>Async preservation</h3>
+            <p class="settings-preview">
+              Reorder the option data and keep selected object values available for forms, filters, and reports.
+            </p>
+            <button class="small-button" type="button" (click)="reloadAsyncData()">Refresh async source</button>
+          </article>
+        </div>
+
+        <div class="case-list">
+          <ng-container *ngFor="let example of visibleExamples; trackBy: trackExample">
+            <ng-container *ngTemplateOutlet="exampleRow; context: { example: example }"></ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'headless-aria'">
+        <article class="example-row headless-flag-row">
+          <div class="demo-cell">
+            <div class="headless-aria-shell">
+              <header class="headless-aria-header">
+                <span>Product-owned markup</span>
+                <button
+                  type="button"
+                  class="headless-aria-clear"
+                  (click)="headlessState.clearSelection()"
+                  [disabled]="!headlessState.selectedItems.length">
+                  Clear all
+                </button>
+              </header>
+
+              <button
+                type="button"
+                class="headless-aria-trigger"
+                [attr.role]="headlessTrigger.role"
+                [attr.aria-haspopup]="headlessTrigger.ariaHaspopup"
+                [attr.aria-controls]="headlessTrigger.ariaControls"
+                [attr.aria-expanded]="headlessTrigger.ariaExpanded"
+                [attr.aria-activedescendant]="headlessTrigger.ariaActivedescendant"
+                [attr.aria-label]="headlessTrigger.ariaLabel"
+                (click)="headlessState.toggleOpen()">
+                <span>
+                  <small>Deployment markets</small>
+                  <strong>{{ headlessLabel }}</strong>
+                </span>
+                <b>{{ headlessState.isOpen ? 'Expanded' : 'Collapsed' }}</b>
+              </button>
+
+              <div class="headless-aria-selected" [attr.aria-label]="headlessSummary" aria-live="polite">
+                <span class="headless-aria-chip" *ngFor="let item of visibleHeadlessBadges">
+                  <span class="headless-aria-flag" [ngClass]="flagClass(item.flag)" aria-hidden="true"></span>
+                  {{ item.itemName }}
+                  <button type="button" (click)="removeHeadless(item)" [attr.aria-label]="'Remove ' + item.itemName">
+                    <span aria-hidden="true">x</span>
+                  </button>
+                </span>
+                <span class="headless-aria-counter" *ngIf="hiddenHeadlessBadgeCount > 0">
+                  +{{ hiddenHeadlessBadgeCount }}
+                </span>
+                <span class="headless-aria-empty" *ngIf="!headlessState.selectedItems.length">
+                  No selected countries
+                </span>
+              </div>
+
+              <div class="headless-aria-panel" *ngIf="headlessState.isOpen">
+                <label class="headless-aria-search-label" for="headless-search">Search countries</label>
+                <input
+                  id="headless-search"
+                  class="headless-aria-search"
+                  type="search"
+                  [ngModel]="headlessState.filter"
+                  (ngModelChange)="headlessState.setFilter($event)"
+                  aria-label="Search custom country options"
+                  placeholder="Search country, capital, or region" />
+
+                <div class="headless-aria-actions">
+                  <button type="button" (click)="selectHeadlessVisible()" [disabled]="!headlessOptions.length">
+                    Select visible
+                  </button>
+                  <button
+                    type="button"
+                    (click)="headlessState.clearSelection()"
+                    [disabled]="!headlessState.selectedItems.length">
+                    Clear selected
+                  </button>
+                </div>
+
+                <div
+                  class="headless-aria-listbox"
+                  [id]="headlessListbox.id"
+                  [attr.role]="headlessListbox.role"
+                  [attr.aria-multiselectable]="headlessListbox.ariaMultiselectable"
+                  [attr.aria-label]="headlessListbox.ariaLabel">
+                  <section
+                    class="headless-aria-group"
+                    *ngFor="let group of headlessGroups"
+                    role="group"
+                    [attr.aria-label]="group.name">
+                    <header class="headless-aria-group-head">
+                      <span>{{ group.name }}</span>
+                      <button type="button" (click)="toggleHeadlessGroup(group)">
+                        {{ group.selected ? 'Clear group' : 'Select group' }}
+                      </button>
+                    </header>
+                    <div
+                      class="headless-aria-option"
+                      *ngFor="let option of group.items; let i = index; trackBy: trackOption"
+                      [class.selected]="option.selected"
+                      [id]="option.id"
+                      [attr.role]="option.role"
+                      [attr.aria-selected]="option.ariaSelected"
+                      [attr.aria-checked]="option.ariaChecked"
+                      [attr.aria-disabled]="option.ariaDisabled"
+                      tabindex="0"
+                      (click)="onHeadlessOptionClick(option)"
+                      (keydown)="onHeadlessOptionKeydown($event, option, i)">
+                      <span class="headless-aria-check" [attr.data-checked]="option.selected" aria-hidden="true"></span>
+                      <span class="headless-aria-flag" [ngClass]="flagClass(option.item.flag)" aria-hidden="true"></span>
+                      <span class="headless-aria-option-copy">
+                        <strong>{{ option.label }}</strong>
+                        <small>{{ option.item.capital }} - {{ option.item.region }}</small>
+                      </span>
+                      <span class="headless-aria-state">
+                        aria-selected={{ option.ariaSelected }}<br />
+                        aria-checked={{ option.ariaChecked }}
+                      </span>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <dl class="headless-aria-audit">
+                <div>
+                  <dt>Trigger</dt>
+                  <dd>{{ headlessTrigger.role }}</dd>
+                </div>
+                <div>
+                  <dt>Listbox id</dt>
+                  <dd>{{ headlessListbox.id }}</dd>
+                </div>
+                <div>
+                  <dt>Active option</dt>
+                  <dd>{{ headlessTrigger.ariaActivedescendant || 'none' }}</dd>
+                </div>
+                <div>
+                  <dt>Visible</dt>
+                  <dd>{{ headlessOptions.length }} options</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+          <div class="code-cell">
+            <div class="code-grid">
+              <div class="code-card">
+                <strong>HTML</strong>
+                <pre>{{ headlessHtmlCode }}</pre>
+              </div>
+              <div class="code-card">
+                <strong>TS</strong>
+                <pre>{{ headlessTsCode }}</pre>
+              </div>
+              <div class="code-card">
+                <strong>JSON</strong>
+                <pre>{{ headlessJsonCode }}</pre>
+              </div>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <div class="case-list">
+          <ng-container *ngFor="let example of visibleExamples; trackBy: trackExample">
+            <ng-container *ngTemplateOutlet="exampleRow; context: { example: example }"></ng-container>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
+  </section>
+
+  <section class="activity">
+    <h2>Event log</h2>
+    <p *ngFor="let event of eventLog">{{ event }}</p>
+    <p *ngIf="!eventLog.length">No events yet.</p>
+    <button type="button" (click)="clearLog()">Clear log</button>
+  </section>
 </main>
+
+<ng-template #exampleRow let-example="example">
+  <article class="example-row" [class.overflow-example-row]="example.overflow">
+    <div class="demo-cell">
+      <div class="case-title-row">
+        <h3>{{ example.number }}. {{ example.title }}</h3>
+        <div class="case-actions">
+          <button
+            type="button"
+            class="small-button"
+            *ngIf="example.allowDisabledToggle"
+            (click)="toggleDisabled(example)">
+            {{ disabledMap[example.id] ? 'Enable' : 'Disable' }}
+          </button>
+        </div>
+      </div>
+
+      <p class="example-copy">{{ example.description }}</p>
+
+      <ng-container *ngIf="example.formValidation; else plainDropdown">
+        <form class="docs-form" (submit)="$event.preventDefault(); record(example.eventPrefix + ' submit', example.selected)">
+          <label class="form-field">
+            <span>Name</span>
+            <input [(ngModel)]="formName" name="formName" />
+          </label>
+          <label class="form-field">
+            <span>Email Address <em>* required</em></span>
+            <input [(ngModel)]="formEmail" name="formEmail" />
+          </label>
+          <div class="form-field">
+            <span>Skills <em>* required</em></span>
+            <ng-container *ngTemplateOutlet="dropdownTemplate; context: { example: example }"></ng-container>
+          </div>
+          <button class="submit-button" type="submit" [disabled]="!formEmail || !example.selected.length">
+            Submit
+          </button>
+        </form>
+        <p [class.ok]="example.selected.length" class="validation">
+          {{ example.selected.length ? 'Valid selection.' : 'Select at least one skill.' }}
+        </p>
+      </ng-container>
+
+      <ng-template #plainDropdown>
+        <ng-container *ngIf="example.overflow; else standardDropdown">
+          <div class="overflow-dialog-frame">
+            <div class="demo-dialog-surface" [class.opens-up]="example.overflow === 'top'">
+              <div class="dialog-copy">
+                <strong>Simulated dialog surface</strong>
+                <span>overflow hidden, stacking context, and a dropdown near the edge.</span>
+              </div>
+              <ng-container *ngTemplateOutlet="dropdownTemplate; context: { example: example }"></ng-container>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #standardDropdown>
+          <ng-container *ngTemplateOutlet="dropdownTemplate; context: { example: example }"></ng-container>
+        </ng-template>
+      </ng-template>
+
+      <p class="settings-preview" *ngIf="example.note">{{ example.note }}</p>
+      <p class="settings-preview" *ngIf="example.overflow">tagToBody: true | appendToBody: true</p>
+    </div>
+
+    <div class="code-cell">
+      <ng-container *ngTemplateOutlet="codeTemplate; context: { example: example }"></ng-container>
+    </div>
+  </article>
+</ng-template>
+
+<ng-template #dropdownTemplate let-example="example">
+  <angular-multiselect
+    #dropdown
+    [data]="example.data"
+    [(ngModel)]="example.selected"
+    [settings]="example.settings"
+    (onSelect)="record(example.eventPrefix + ' select', $event)"
+    (onDeSelect)="record(example.eventPrefix + ' deselect', $event)"
+    (onSelectAll)="record(example.eventPrefix + ' selectAll', $event)"
+    (onDeSelectAll)="record(example.eventPrefix + ' deselectAll', $event)"
+    (onOpen)="record(example.eventPrefix + ' open', 'opened')"
+    (onClose)="record(example.eventPrefix + ' close', 'closed')"
+    (onScrollToEnd)="appendNextChunk(example)"
+    (onAddFilterNewItem)="addFilterItem(example, $event)">
+    <ng-container *ngIf="example.template">
+      <c-badge>
+        <ng-template let-item="item">
+          <span class="swatch-chip">
+            <span class="flag-chip" [ngClass]="flagClass(item.flag)" aria-hidden="true"></span>
+            {{ item.itemName }}
+          </span>
+        </ng-template>
+      </c-badge>
+      <c-item>
+        <ng-template let-item="item">
+          <span class="option-row">
+            <span class="flag-chip" [ngClass]="flagClass(item.flag)" aria-hidden="true"></span>
+            <span>
+              <strong>{{ item.itemName }}</strong>
+              <small>{{ item.caption }}</small>
+            </span>
+          </span>
+        </ng-template>
+      </c-item>
+    </ng-container>
+  </angular-multiselect>
+
+  <div class="method-bar" *ngIf="example.methods">
+    <button type="button" (click)="dropdown.openDropdown()">Open</button>
+    <button type="button" (click)="dropdown.closeDropdown()">Close</button>
+    <button type="button" (click)="dropdown.focusSearch()">Focus search</button>
+    <button type="button" (click)="dropdown.toggleSelectAll($event)">Select all</button>
+    <button type="button" (click)="dropdown.clearSelection($event)">Clear</button>
+  </div>
+</ng-template>
+
+<ng-template #codeTemplate let-example="example">
+  <div class="code-grid">
+    <div class="code-card" *ngFor="let snippet of codeFor(example)">
+      <strong>{{ snippet.label }}</strong>
+      <pre>{{ snippet.code }}</pre>
+    </div>
+  </div>
+</ng-template>

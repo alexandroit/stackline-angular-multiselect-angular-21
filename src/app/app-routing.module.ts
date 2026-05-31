@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'basic', loadChildren: () => import('./examples/basic/basic.module').then((m) => m.BasicExampleModule) },
+  { path: 'keyboard-contract', loadChildren: () => import('./examples/keyboard-contract/keyboard-contract.module').then((m) => m.KeyboardContractExampleModule) },
+  { path: 'aria-state', loadChildren: () => import('./examples/aria-state/aria-state.module').then((m) => m.AriaStateExampleModule) },
+  { path: 'template-slots', loadChildren: () => import('./examples/template-slots/template-slots.module').then((m) => m.TemplateSlotsExampleModule) },
+  { path: 'headless-aria', loadChildren: () => import('./examples/headless-aria/headless-aria.module').then((m) => m.HeadlessAriaExampleModule) },
   { path: 'single-selection', loadChildren: () => import('./examples/single-selection/single-selection.module').then((m) => m.SingleSelectionExampleModule) },
   { path: 'search-filter', loadChildren: () => import('./examples/search-filter/search-filter.module').then((m) => m.SearchFilterExampleModule) },
   { path: 'custom-search-api', loadChildren: () => import('./examples/custom-search-api/custom-search-api.module').then((m) => m.CustomSearchApiExampleModule) },
@@ -31,7 +35,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

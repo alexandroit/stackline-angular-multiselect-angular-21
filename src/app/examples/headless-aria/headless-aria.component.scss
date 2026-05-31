@@ -1,0 +1,119 @@
+@use '../../shared/example-layout';
+
+.headless-root {
+  position: relative;
+  max-width: 620px;
+}
+
+.headless-trigger {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid #c5cae9;
+  border-radius: 16px;
+  background: #fff;
+  color: #253858;
+  font-weight: 700;
+  text-align: left;
+}
+
+.headless-panel {
+  margin-top: 8px;
+  overflow: hidden;
+  border: 1px solid #c5cae9;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(63, 81, 181, 0.16);
+}
+
+.headless-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+  padding: 12px;
+  border-bottom: 1px solid #e4e7ec;
+  background: #f8fafc;
+}
+
+.headless-toolbar input {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid #d7dcec;
+  border-radius: 12px;
+}
+
+.headless-toolbar button {
+  padding: 0 12px;
+  border: 1px solid #d7dcec;
+  border-radius: 12px;
+  background: #fff;
+  font-weight: 700;
+}
+
+.headless-listbox {
+  display: grid;
+  gap: 4px;
+  max-height: 240px;
+  overflow: auto;
+  padding: 8px;
+}
+
+.headless-option {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.headless-option[aria-selected='true'] {
+  background: rgba(63, 81, 181, 0.12);
+  color: #303f9f;
+}
+
+.headless-option:focus-visible {
+  outline: 3px solid rgba(63, 81, 181, 0.3);
+  outline-offset: 2px;
+}
+
+.headless-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.headless-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #e8eaf6;
+  color: #303f9f;
+  font-weight: 700;
+}
+
+.headless-chip button {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.flag {
+  width: 22px;
+  text-align: center;
+}
+
+.code-note {
+  margin-top: 14px;
+  padding: 14px;
+  border: 1px solid #e4e7ec;
+  border-radius: 16px;
+  background: #f8fafc;
+}
