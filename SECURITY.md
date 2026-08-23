@@ -5,9 +5,14 @@
 This playground tracks its checked-in Angular 21 patch line. It is a private npm
 application used for documentation and is not published as a package.
 
-The installed runtime dependency audit is clean. Angular 21's development
-server retains moderate advisories without a compatible patch in that framework
-line; it must only bind to trusted local interfaces during development.
+The installed application runtime is clean. Patched overrides are enforced for
+the Angular development server and its UUID dependency. Angular's Less compiler
+still reaches `image-size`, whose ICNS, JXL, and HEIF parser advisories do not
+have an upstream patched release. The repository does not process untrusted
+images during builds, and the affected tool is absent from deployed output.
+
+`npm run audit:dependencies` fails on every finding except those two exact
+unfixed advisories and will also fail once npm reports a compatible fix.
 
 ## Reporting
 

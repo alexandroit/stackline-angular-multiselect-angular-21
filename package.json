@@ -7,7 +7,8 @@
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build --configuration development --base-href ./",
     "watch": "ng build --watch --configuration development",
-    "check": "npm run build && npm audit --omit=optional --audit-level=high"
+    "audit:dependencies": "node tools/stackline-audit-angular-build.mjs",
+    "check": "npm run build && npm run audit:dependencies"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +31,10 @@
     "@angular/compiler-cli": "21.2.21",
     "@types/node": "20.19.25",
     "typescript": "5.9.3"
+  },
+  "overrides": {
+    "uuid": "11.1.1",
+    "webpack-dev-server": "5.2.6"
   },
   "main": "index.js",
   "keywords": [

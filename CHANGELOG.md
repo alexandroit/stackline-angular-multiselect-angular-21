@@ -8,6 +8,6 @@ All notable repository changes are documented here.
 - Updated Zone.js to 0.16.2 and regenerated the reproducible npm lockfile.
 - Added Node 22/24 CI, a high-severity vulnerability gate, and a private
   security-reporting policy.
-- Confirmed the application runtime audit is clean. Four moderate development
-  server findings remain upstream in Angular 21 with no compatible backport;
-  optional image tooling is excluded from the CI gate and production output.
+- Patched the development server and UUID advisories with tested overrides.
+- Added an exact advisory policy for the two unfixed `image-size` parser
+  findings in Angular's Less compiler; every other audit finding remains fatal.
