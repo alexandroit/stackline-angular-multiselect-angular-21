@@ -28,7 +28,7 @@
     "@angular/cli": "21.2.12",
     "@angular/compiler-cli": "21.2.14",
     "@types/node": "20.19.25",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "main": "index.js",
   "keywords": [],
