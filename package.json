@@ -29,7 +29,7 @@
     "@angular-devkit/build-angular": "21.2.21",
     "@angular/cli": "21.2.21",
     "@angular/compiler-cli": "21.2.21",
-    "@types/node": "20.19.25",
+    "@types/node": "20.19.43",
     "typescript": "5.9.3"
   },
   "overrides": {
