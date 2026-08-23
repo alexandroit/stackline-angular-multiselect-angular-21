@@ -90,3 +90,9 @@ Open a specific route by adding `initialpath`:
 ```text
 https://stackblitz.com/github/alexandroit/stackline-angular-multiselect-angular-21?startScript=start&initialpath=%2Fsearch-filter
 ```
+
+## License
+
+The playground source is available under the [MIT License](LICENSE), including
+the retained attribution for the original Cuppa Labs project. Dependencies
+retain their respective licenses.
